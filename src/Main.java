@@ -1,14 +1,14 @@
 import java.util.*;
 
 /* @author: Jaslyn Jacob
-   @version: 5.0
+   @version: 6.0
  */
 
 class Main{
     public static void main(String[] args){
         Scanner input=new Scanner(System.in);
-        double version=5.0;
-        System.out.println("Welcome to the Palindrome Checker App (UC5) ");
+        double version=6.0;
+        System.out.println("Welcome to the Palindrome Checker App (UC6) ");
         System.out.println("Version: "+version);
 
         System.out.print("Enter a word to check: ");
@@ -17,17 +17,19 @@ class Main{
         String lowerWord=word.toLowerCase();
         char[] charArr=lowerWord.toCharArray();
         boolean palindrome=true;
-        int i=0;
+
         Stack<Character> charStack=new Stack<>();
+        Queue<Character> charQueue=new LinkedList<>();
 
         for(char c: charArr){
             charStack.push(c);
+            charQueue.add(c);
         }
-        while(!charStack.isEmpty()){
-            if(charStack.pop() != charArr[i]){
+        while(!charQueue.isEmpty()){
+            if(charStack.pop() != charQueue.remove()){
                 palindrome=false;
                 break;
-            }i++;
+            }
         }
 
         System.out.println("Input text: "+word);
