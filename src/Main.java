@@ -1,32 +1,31 @@
 import java.util.*;
 
 /* @author: Jaslyn Jacob
-   @version: 6.0
+   @version: 7.0
  */
 
 class Main{
     public static void main(String[] args){
         Scanner input=new Scanner(System.in);
-        double version=6.0;
-        System.out.println("Welcome to the Palindrome Checker App (UC6) ");
+        double version=7.0;
+        System.out.println("Welcome to the Palindrome Checker App (UC7) ");
         System.out.println("Version: "+version);
 
         System.out.print("Enter a word to check: ");
         String word=input.nextLine();
 
         String lowerWord=word.toLowerCase();
-        char[] charArr=lowerWord.toCharArray();
         boolean palindrome=true;
 
-        Stack<Character> charStack=new Stack<>();
-        Queue<Character> charQueue=new LinkedList<>();
+        Deque<Character> charQueue=new LinkedList<>();
 
-        for(char c: charArr){
-            charStack.push(c);
-            charQueue.add(c);
+        for(int i=0; i<lowerWord.length(); i++){
+            charQueue.add(lowerWord.charAt(i));
         }
-        while(!charQueue.isEmpty()){
-            if(charStack.pop() != charQueue.remove()){
+        while(charQueue.size()>1){
+            Character first=charQueue.pollFirst();
+            Character last=charQueue.pollLast();
+            if(!first.equals(last)){
                 palindrome=false;
                 break;
             }
