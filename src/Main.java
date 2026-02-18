@@ -1,16 +1,19 @@
 import java.util.*;
 
 /* @author: Jaslyn Jacob
-   @version: 2.0
+   @version: 3.0
  */
 
 class Main{
     public static void main(String[] args){
-        double version=2.0;
-        System.out.println("Welcome to the Palindrome Checker App (UC1) ");
+        Scanner input=new Scanner(System.in);
+        double version=3.0;
+        System.out.println("Welcome to the Palindrome Checker App (UC3) ");
         System.out.println("Version: "+version);
 
-        String word="Race Bar";
+        System.out.print("Enter a word to check: ");
+        String word=input.nextLine();
+
         String lowerWord=word.toLowerCase();
         String reversed= "";
         for(int i=word.length()-1; i>=0; i--)
