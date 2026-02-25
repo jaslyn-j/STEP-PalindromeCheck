@@ -1,18 +1,10 @@
 import java.util.*;
 
 /* @author: Jaslyn Jacob
-   @version: 10.0
+   @version: 11.0
  */
-class Main{
-    public static void main(String[] args){
-        Scanner input=new Scanner(System.in);
-        double version=10.0;
-        System.out.println("Welcome to the Palindrome Checker App (UC10) ");
-        System.out.println("Version: "+version);
-
-        System.out.print("Enter a word to check: ");
-        String word=input.nextLine();
-
+class Palindrome{
+    public boolean checkPalindrome(String word){
         String lowerWord=word.toLowerCase();
         String normalizedWord=lowerWord.replaceAll("\\s", "");
         boolean palindrome=true;
@@ -22,9 +14,24 @@ class Main{
                 palindrome=false;
                 break;
             }
-        }
+        }return palindrome;
+    }
+}
+
+public class Main{
+    public static void main(String[] args){
+        Scanner input=new Scanner(System.in);
+        Palindrome checker=new Palindrome();
+        double version=11.0;
+        System.out.println("Welcome to the Palindrome Checker App (UC11) ");
+        System.out.println("Version: "+version);
+
+        System.out.print("Enter a word to check: ");
+        String word=input.nextLine();
+
+        boolean check=checker.checkPalindrome(word);
 
         System.out.println("Input text: "+word);
-        System.out.println("Is it a palindrome? : "+palindrome);
+        System.out.println("Is it a palindrome? : "+check);
     }
 }
