@@ -1,63 +1,49 @@
 import java.util.*;
 
 /* @author: Jaslyn Jacob
-   @version: 12.0
+   @version: 13.0
  */
-interface PalindromeStrategy{
-    boolean checkPalindrome(String s);
-}
-class StackStrategy implements PalindromeStrategy {
-    public boolean checkPalindrome(String s) {
-        Stack<Character> stack = new Stack<>();
-        for (char c : s.toCharArray()) stack.push(c);
-
-        for (char c : s.toCharArray()) {
-            if (c != stack.pop()) return false;
-        }
-        return true;
-    }
-}
-class DequeStrategy implements PalindromeStrategy {
-    public boolean checkPalindrome(String s) {
-        Deque<Character> deque = new ArrayDeque<>();
-        for (char c : s.toCharArray()) deque.add(c);
-
-        while (deque.size() > 1) {
-            if (deque.pollFirst() != deque.pollLast()) return false;
-        }
-        return true;
-    }
-}
-class Palindrome{
-    private final PalindromeStrategy strategy;
-
-    Palindrome(PalindromeStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    void check(String s) {
-        System.out.println(s + ": " + (strategy.checkPalindrome(s) ? "Palindrome" : "Not a Palindrome"));
-    }
-}
 
 public class Main{
+    static boolean usingStack(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (char c:s.toCharArray()) stack.push(c);
+        for (char c:s.toCharArray())
+            if (c !=stack.pop()) return false;
+        return true;
+    }
+    static boolean usingTwoPointer(String s) {
+        int l = 0, r = s.length() - 1;
+        while (l < r)
+            if (s.charAt(l++) != s.charAt(r--)) return false;
+        return true;
+    }
+    static long time(Runnable fn) {
+        long start = System.nanoTime();
+        fn.run();
+        return System.nanoTime() - start;
+    }
+
     public static void main(String[] args){
         Scanner input=new Scanner(System.in);
-        double version=12.0;
-
-        Palindrome checker = new Palindrome(new StackStrategy());
-        System.out.println("Stack: ");
+        double version=13.0;
 
         System.out.println("Welcome to the Palindrome Checker App (UC11) ");
         System.out.println("Version: "+version);
 
         System.out.print("Enter a word to check: ");
         String word=input.nextLine();
-        System.out.println("Stack: ");
-        checker.check(word);
 
-        checker = new Palindrome(new DequeStrategy());
-        System.out.println("Deque: ");
-        checker.check(word);
+        long start1 = System.nanoTime();
+        boolean result1=usingStack(word);
+        long t1 = System.nanoTime() - start1;
+
+        long start2 = System.nanoTime();
+        boolean result2 =usingTwoPointer(word);
+        long t2 = System.nanoTime() - start2;
+
+        System.out.println("Stack:"+result1+" ," + t1 + " ns");
+        System.out.println("Two Pointer:"+result2+" ," + t2 + " ns");
+        System.out.println("which is faster:" + (t1 < t2 ? "Stack" : "Two Pointer"));
     }
 }
