@@ -1,37 +1,63 @@
 import java.util.*;
 
 /* @author: Jaslyn Jacob
-   @version: 11.0
+   @version: 12.0
  */
-class Palindrome{
-    public boolean checkPalindrome(String word){
-        String lowerWord=word.toLowerCase();
-        String normalizedWord=lowerWord.replaceAll("\\s", "");
-        boolean palindrome=true;
+interface PalindromeStrategy{
+    boolean checkPalindrome(String s);
+}
+class StackStrategy implements PalindromeStrategy {
+    public boolean checkPalindrome(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) stack.push(c);
 
-        for(int i=0; i<normalizedWord.length()/2; i++){
-            if(normalizedWord.charAt(i) != normalizedWord.charAt(normalizedWord.length()-i-1)){
-                palindrome=false;
-                break;
-            }
-        }return palindrome;
+        for (char c : s.toCharArray()) {
+            if (c != stack.pop()) return false;
+        }
+        return true;
+    }
+}
+class DequeStrategy implements PalindromeStrategy {
+    public boolean checkPalindrome(String s) {
+        Deque<Character> deque = new ArrayDeque<>();
+        for (char c : s.toCharArray()) deque.add(c);
+
+        while (deque.size() > 1) {
+            if (deque.pollFirst() != deque.pollLast()) return false;
+        }
+        return true;
+    }
+}
+class Palindrome{
+    private final PalindromeStrategy strategy;
+
+    Palindrome(PalindromeStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    void check(String s) {
+        System.out.println(s + ": " + (strategy.checkPalindrome(s) ? "Palindrome" : "Not a Palindrome"));
     }
 }
 
 public class Main{
     public static void main(String[] args){
         Scanner input=new Scanner(System.in);
-        Palindrome checker=new Palindrome();
-        double version=11.0;
+        double version=12.0;
+
+        Palindrome checker = new Palindrome(new StackStrategy());
+        System.out.println("Stack: ");
+
         System.out.println("Welcome to the Palindrome Checker App (UC11) ");
         System.out.println("Version: "+version);
 
         System.out.print("Enter a word to check: ");
         String word=input.nextLine();
+        System.out.println("Stack: ");
+        checker.check(word);
 
-        boolean check=checker.checkPalindrome(word);
-
-        System.out.println("Input text: "+word);
-        System.out.println("Is it a palindrome? : "+check);
+        checker = new Palindrome(new DequeStrategy());
+        System.out.println("Deque: ");
+        checker.check(word);
     }
 }
